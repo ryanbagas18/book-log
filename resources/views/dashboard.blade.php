@@ -74,91 +74,130 @@
 </div>
 @endsection
 
-@section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script>
-        const ctx = document.getElementById('dashboardChart').getContext('2d');
-        const chartData = @json($chartData);
-        
-        console.log('Chart Data:', chartData);
-        
-        if (chartData.length > 0) {
-            new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: chartData.map(d => d.month),
-                datasets: [
-                    {
-                        label: 'Expenses (Rp)',
-                        data: chartData.map(d => d.expenses),
-                        backgroundColor: 'rgba(13, 110, 253, 0.5)',
-                        borderColor: 'rgba(13, 110, 253, 1)',
-                        borderWidth: 1,
-                        yAxisID: 'y'
-                    },
-                    {
-                        label: 'Books Completed',
-                        data: chartData.map(d => d.books_completed),
-                        backgroundColor: 'rgba(25, 135, 84, 0.5)',
-                        borderColor: 'rgba(25, 135, 84, 1)',
-                        borderWidth: 1,
-                        yAxisID: 'y1'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#e0e0e0'
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('dashboardChart');
+            if (!canvas) return;
+
+            const chartData = @json($chartData);
+
+            // Limit to last 12 months
+            const last12MonthsData = chartData.slice(-12);
+
+            // IDR formatter
+            const formatIDR = (value) => {
+                if (value >= 1000000) {
+                    return (value / 1000000).toFixed(1) + 'M';
+                } else if (value >= 1000) {
+                    return (value / 1000).toFixed(0) + 'k';
+                }
+                return value.toString();
+            };
+
+            const formatIDRFull = (value) => {
+                return 'Rp ' + value.toLocaleString('id-ID');
+            };
+
+            new Chart(canvas, {
+                type: 'bar',
+                data: {
+                    labels: last12MonthsData.map(d => d.month),
+                    datasets: [
+                        {
+                            label: 'Expenses (Rp)',
+                            data: last12MonthsData.map(d => Number(d.expenses)),
+                            backgroundColor: 'rgba(13, 110, 253, 0.5)',
+                            borderColor: 'rgba(13, 110, 253, 1)',
+                            borderWidth: 1,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Books Completed',
+                            data: last12MonthsData.map(d => Number(d.books_completed)),
+                            backgroundColor: 'rgba(25, 135, 84, 0.5)',
+                            borderColor: 'rgba(25, 135, 84, 1)',
+                            borderWidth: 1,
+                            yAxisID: 'y1'
                         }
-                    }
+                    ]
                 },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: '#e0e0e0'
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e0e0e0'
+                            }
                         },
-                        grid: {
-                            color: '#333'
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.dataset.yAxisID === 'y') {
+                                        label += formatIDRFull(context.parsed.y);
+                                    } else {
+                                        label += context.parsed.y;
+                                    }
+                                    return label;
+                                }
+                            }
                         }
                     },
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        title: {
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#e0e0e0'
+                            },
+                            grid: {
+                                color: '#333'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
                             display: true,
-                            text: 'Expenses (Rp)',
-                            color: '#e0e0e0'
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Expenses (Rp)',
+                                color: '#e0e0e0'
+                            },
+                            ticks: {
+                                color: '#e0e0e0',
+                                callback: function(value) {
+                                    return formatIDR(value);
+                                }
+                            },
+                            grid: {
+                                color: '#333'
+                            },
+                            beginAtZero: true
                         },
-                        ticks: {
-                            color: '#e0e0e0'
-                        },
-                        grid: {
-                            color: '#333'
-                        }
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-                        title: {
+                        y1: {
+                            type: 'linear',
                             display: true,
-                            text: 'Books Completed',
-                            color: '#e0e0e0'
-                        },
-                        ticks: {
-                            color: '#e0e0e0'
-                        },
-                        grid: {
-                            drawOnChartArea: false
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Books Completed',
+                                color: '#e0e0e0'
+                            },
+                            ticks: {
+                                color: '#e0e0e0',
+                                stepSize: 1
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            },
+                            beginAtZero: true
                         }
                     }
                 }
-            }
+            });
         });
-        }
     </script>
-@endsection
+@endpush
