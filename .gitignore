@@ -22,5 +22,4 @@ yarn-error.log
 /.vscode
 /.zed
 
-# Local scratch / accidental working folders
 /anti-slop/

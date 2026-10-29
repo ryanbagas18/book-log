@@ -7,15 +7,15 @@
             @endif
 
             <!-- Search Section -->
-            <div class="card mb-4 shadow-sm border-0 bg-primary">
+            <div class="card mb-4 shadow-sm border-0" style="background-color: #252525;">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
-                            class="bi bi-search me-2 text-white" viewBox="0 0 16 16">
+                            class="bi bi-search me-2" style="color: #0d6efd;" viewBox="0 0 16 16">
                             <path
-                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 6.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                         </svg>
-                        <h5 class="mb-0 text-white fw-bold">Search Book from API</h5>
+                        <h5 class="mb-0 fw-bold">Search Book from API</h5>
                     </div>
                     <div class="row g-2">
                         <div class="col-md-3">
@@ -62,8 +62,8 @@
             <div class="card mb-4 shadow-sm">
                 <div class="card-header bg-white border-0 py-3">
                     <div class="d-flex align-items-center">
-                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3"
-                            style="width: 40px; height: 40px;">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                            style="width: 40px; height: 40px; background-color: #0d6efd;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                 class="bi bi-book text-white" viewBox="0 0 16 16">
                                 <path
@@ -270,10 +270,15 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="rating" class="form-label fw-bold">Rating</label>
-                                <input type="hidden" id="rating" name="rating" value="{{ old('rating', isset($book) ? $book->rating : '') }}">
-                                <div class="star-rating" id="star-rating" style="font-size: 24px; cursor: pointer;">
+                                <input type="hidden" id="rating" name="rating"
+                                    value="{{ old('rating', isset($book) ? $book->rating : '') }}">
+                                <div class="star-rating d-flex gap-1" id="star-rating" style="cursor: pointer;">
                                     @for ($i = 1; $i <= 5; $i++)
-                                        <span class="star" data-value="{{ $i }}" style="color: #ccc; margin-right: 4px;">☆</span>
+                                        <span class="star" data-value="{{ $i }}" style="width: 28px; height: 28px; color: #444;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
                                     @endfor
                                 </div>
                                 <small class="text-muted">Click stars to rate</small>
@@ -731,12 +736,13 @@
                 function updateStars(rating) {
                     stars.forEach(star => {
                         const val = parseInt(star.getAttribute('data-value'));
+                        const svg = star.querySelector('svg');
                         if (val <= rating) {
-                            star.textContent = '★';
+                            svg.innerHTML = '<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>';
                             star.style.color = '#ffc107';
                         } else {
-                            star.textContent = '☆';
-                            star.style.color = '#ccc';
+                            svg.innerHTML = '<path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957-2.913-2.835 4.022-.58 1.795-3.647 1.795 3.647 4.022.58-2.913 2.835.694 3.957-3.686-1.894z"/>';
+                            star.style.color = '#444';
                         }
                     });
                 }

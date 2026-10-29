@@ -86,6 +86,47 @@ class BookController extends Controller
     }
 
     /**
+     * Export books to CSV.
+     */
+    public function export()
+    {
+        $books = Book::all();
+        
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="book-inventory-' . date('Y-m-d') . '.csv',
+        ];
+
+        $callback = function() use ($books) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, ['Title', 'Author', 'Genre', 'Language', 'Pages', 'ISBN', 'Status', 'Rating', 'Ownership', 'Purchase Place', 'Condition', 'Purchase Date', 'Price', 'Notes']);
+            
+            foreach ($books as $book) {
+                fputcsv($file, [
+                    $book->title,
+                    $book->author,
+                    $book->genre,
+                    $book->language,
+                    $book->pages,
+                    $book->isbn,
+                    $book->status,
+                    $book->rating,
+                    $book->ownership,
+                    $book->purchase_place,
+                    $book->condition,
+                    $book->purchase_date ? $book->purchase_date->format('Y-m-d') : '',
+                    $book->price,
+                    $book->notes,
+                ]);
+            }
+            
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
      * Search books via external API.
      */
     public function searchBooks(Request $request)
