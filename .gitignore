@@ -21,3 +21,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Local scratch / accidental working folders
+/anti-slop/
