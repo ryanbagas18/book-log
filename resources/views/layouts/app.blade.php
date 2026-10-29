@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +7,101 @@
     <title>@yield('title', 'Book Log')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .navbar {
+            background-color: #1a1a1a !important;
+            border-bottom: 1px solid #333;
+        }
+        .navbar-brand {
+            color: #ffffff !important;
+        }
+        .nav-link {
+            color: #b0b0b0 !important;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #ffffff !important;
+        }
+        .card {
+            background-color: #1e1e1e !important;
+            border: 1px solid #333;
+        }
+        .card-header {
+            background-color: #252525 !important;
+            border-bottom: 1px solid #333;
+        }
+        .form-control, .form-select {
+            background-color: #2d2d2d;
+            border: 1px solid #444;
+            color: #e0e0e0;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: #2d2d2d;
+            border-color: #0d6efd;
+            color: #e0e0e0;
+        }
+        .form-control::placeholder {
+            color: #888;
+        }
+        .table {
+            color: #e0e0e0;
+        }
+        .table {
+            --bs-table-bg: #1e1e1e;
+            --bs-table-border-color: #333;
+            --bs-table-color: #e0e0e0;
+        }
+        .alert {
+            background-color: #2d2d2d;
+            border: 1px solid #444;
+            color: #e0e0e0;
+        }
+        .alert-success {
+            background-color: #1e3a1e;
+            border-color: #2d4a2e;
+            color: #90ee90;
+        }
+        .alert-danger {
+            background-color: #3a1e1e;
+            border-color: #4a2e2e;
+            color: #ee9090;
+        }
+        .modal-content {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+        }
+        .modal-header {
+            border-bottom: 1px solid #333;
+        }
+        .modal-footer {
+            border-top: 1px solid #333;
+        }
+        .btn-close {
+            filter: invert(1);
+        }
+        footer {
+            background-color: #1a1a1a;
+            border-top: 1px solid #333;
+        }
+        .text-muted {
+            color: #888 !important;
+        }
+        .text-primary {
+            color: #0d6efd !important;
+        }
+        .text-secondary {
+            color: #6c757d !important;
+        }
+        .badge {
+            color: #121212 !important;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <nav class="navbar navbar-expand-lg shadow">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('books.index') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-book-fill me-2" viewBox="0 0 16 16">
@@ -23,10 +115,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('dashboard.index') }}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('books.index') }}">
-                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book me-1" viewBox="0 0 16 16">
-                                <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-                            </svg> --}}
                             My Books
                         </a>
                     </li>
@@ -62,7 +156,7 @@
         @yield('content')
     </div>
 
-    <footer class="bg-light text-center py-3 mt-5">
+    <footer class="text-center py-3 mt-5">
         <div class="container">
             <p class="mb-0 text-muted">Book Log & Purchase Tracker</p>
         </div>

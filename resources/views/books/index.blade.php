@@ -10,12 +10,20 @@
             <h1 class="mb-2 fw-bold">My Books</h1>
             <p class="text-muted mb-0">Manage your personal book collection</p>
         </div>
-        <a href="{{ route('books.create') }}" class="btn btn-primary btn-lg shadow">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg me-2" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-            </svg>
-            Add Book
-        </a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('books.export') }}" class="btn btn-success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download me-1" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2.5a.5.5 0 0 1 .5-.5zm0-3A1.5 1.5 0 0 3 5v5a1.5 1.5 0 0 1-3 0v-5zM.5 11A1.5 1.5 0 0 0 2 12.5v-5a1.5 1.5 0 0 0-3 0v5A1.5 1.5 0 0 0 .5 11z"/>
+                </svg>
+                Export
+            </a>
+            <a href="{{ route('books.create') }}" class="btn btn-primary btn-lg shadow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg me-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                </svg>
+                Add Book
+            </a>
+        </div>
     </div>
 </div>
 
@@ -200,9 +208,19 @@
                         @endif
                         <p class="card-text fw-bold mb-1 text-primary">{{ $book->formatted_price }}</p>
                         @if($book->rating)
-                            <p class="card-text text-warning small mb-2">
-                                {{ str_repeat('⭐', $book->rating) }}
-                            </p>
+                            <div class="d-flex gap-1 mb-2">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $book->rating)
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill text-warning" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>
+                                    @else
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" style="color: #444;" viewBox="0 0 16 16">
+                                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957-2.913-2.835 4.022-.58 1.795-3.647 1.795 3.647 4.022.58-2.913 2.835.694 3.957-3.686-1.894z"/>
+                                        </svg>
+                                    @endif
+                                @endfor
+                            </div>
                         @endif
                         <div class="mt-auto">
                             <div class="btn-group w-100" role="group">
