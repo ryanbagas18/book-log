@@ -35,9 +35,9 @@
                     @endif
                 </div>
                 <div class="mb-2">
-                    <span class="badge bg-primary">{{ $book->status_label }}</span>
+                    <span class="badge" style="background-color: #0d6efd; color: #ffffff;">{{ $book->status_label }}</span>
                     @if ($book->ownership != 'owned')
-                        <span class="badge bg-warning text-dark">{{ $book->ownership_label }}</span>
+                        <span class="badge" style="background-color: #ffc107; color: #000000;">{{ $book->ownership_label }}</span>
                     @endif
                 </div>
                 @if ($book->rating)
@@ -79,7 +79,7 @@
         <div class="card mb-4 shadow-sm border-0">
             <div class="card-header bg-white border-0 py-3">
                 <div class="d-flex align-items-center">
-                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; background-color: #0d6efd;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle text-white" viewBox="0 0 16 16">
                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                             <path d="m8.93 6.077-2.853.92c-.212.068-.34.297-.293.51l.38 1.456c.057.217.283.363.5.306l1.456-.38c.213-.057.34-.297.293-.51l-.38-1.456c-.057-.217-.283-.363-.5-.306l-1.456.38zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>

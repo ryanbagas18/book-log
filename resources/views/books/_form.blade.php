@@ -7,15 +7,15 @@
             @endif
 
             <!-- Search Section -->
-            <div class="card mb-4 shadow-sm border-0 bg-primary">
+            <div class="card mb-4 shadow-sm border-0" style="background-color: #252525;">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
-                            class="bi bi-search me-2 text-white" viewBox="0 0 16 16">
+                            class="bi bi-search me-2" style="color: #0d6efd;" viewBox="0 0 16 16">
                             <path
-                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 6.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                         </svg>
-                        <h5 class="mb-0 text-white fw-bold">Search Book from API</h5>
+                        <h5 class="mb-0 fw-bold">Search Book from API</h5>
                     </div>
                     <div class="row g-2">
                         <div class="col-md-3">
@@ -62,8 +62,8 @@
             <div class="card mb-4 shadow-sm">
                 <div class="card-header bg-white border-0 py-3">
                     <div class="d-flex align-items-center">
-                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3"
-                            style="width: 40px; height: 40px;">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                            style="width: 40px; height: 40px; background-color: #0d6efd;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                 class="bi bi-book text-white" viewBox="0 0 16 16">
                                 <path
