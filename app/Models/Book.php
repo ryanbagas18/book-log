@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -48,6 +49,7 @@ class Book extends Model
         return 'Rp ' . number_format($this->price, 0, ',', '.');
     }
 
+
     public function getCoverImageUrlAttribute(): ?string
     {
         if ($this->cover_url) {
@@ -80,4 +82,15 @@ class Book extends Model
             'wishlist' => 'Wishlist',
         };
     }
+
+    /**
+     * Scope a query to only include owned books.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Book> $query
+     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Book>
+     */
+  public function scopeOwned($query)
+    {
+        return $query->where('ownership', 'owned');
+    }  
 }

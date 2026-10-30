@@ -3,76 +3,157 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <div class="mb-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <div>
-                <h1 class="fw-bold">Dashboard</h1>
-                <p class="text-muted">Overview of your book collection and reading progress</p>
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h1 class="fw-bold">Dashboard</h1>
+            <p class="text-muted mb-0">Overview of your book collection and reading progress</p>
+        </div>
+        <a href="{{ route('books.export') }}" class="btn btn-success">Export CSV</a>
+    </div>
+
+    <!-- Top stats -->
+    <div class="row g-4 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Books</h6>
+                    <h2 class="mb-0">{{ $totalBooks }}</h2>
+                </div>
             </div>
-            <a href="{{ route('books.export') }}" class="btn btn-success">
-                {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download me-1" viewBox="0 0 16 16">
-                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2.5a.5.5 0 0 1 .5-.5zm0-3A1.5 1.5 0 0 3 5v5a1.5 1.5 0 0 1-3 0v-5zM.5 11A1.5 1.5 0 0 0 2 12.5v-5a1.5 1.5 0 0 0-3 0v5A1.5 1.5 0 0 0 .5 11z"/>
-            </svg> --}}
-                Export CSV
-            </a>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Spent</h6>
+                    <h2 class="mb-0">Rp {{ number_format($totalSpent, 0, ',', '.') }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Books Finished</h6>
+                    <h2 class="mb-0">{{ $finishedBooks }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Completion Rate</h6>
+                    <h2 class="mb-0">{{ $completionRatio }}%</h2>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Stats Cards -->
+    <!-- Range selector -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Trends</h5>
+        <div class="btn-group btn-group-sm" role="group">
+            @foreach (['12' => 'Last 12 months', '24' => 'Last 24 months', 'all' => 'All time'] as $value => $label)
+                <a href="{{ route('dashboard.index', ['range' => $value]) }}"
+                    class="btn btn-outline-secondary {{ $range === (string) $value ? 'active' : '' }}">{{ $label }}</a>
+            @endforeach
+        </div>
+    </div>
+
+    <!-- Charts -->
     <div class="row g-4 mb-5">
-        <div class="col-md-3">
-            <div class="card">
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">Monthly Spending</h5>
+                </div>
                 <div class="card-body">
-                    <h6 class="card-title text-muted mb-2">Total Books</h6>
-                    <h2 class="card-text mb-0">{{ $totalBooks }}</h2>
+                    @if (array_sum($chart['spending']) === 0)
+                        <p class="text-center text-muted py-5 mb-0">No purchases in this period.</p>
+                    @else
+                        <canvas id="spendingChart" style="max-height: 320px;"></canvas>
+                    @endif
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title text-muted mb-2">Total Spent</h6>
-                    <h2 class="card-text mb-0">{{ formatRupiah($totalSpent) }}</h2>
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">Books Bought vs Finished</h5>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title text-muted mb-2">Books Finished</h6>
-                    <h2 class="card-text mb-0">{{ $finishedBooks }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title text-muted mb-2">Completion Rate</h6>
-                    <h2 class="card-text mb-0">{{ $completionRatio }}%</h2>
+                    @if (array_sum($chart['bought']) + array_sum($chart['finished']) === 0)
+                        <p class="text-center text-muted py-5 mb-0">No books bought or finished in this period.</p>
+                    @else
+                        <canvas id="volumeChart" style="max-height: 320px;"></canvas>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Chart -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="mb-0">Monthly Expenses vs Books Completed</h5>
-        </div>
-        <div class="card-body">
-            @if (empty($chartData))
-                <div class="text-center text-muted py-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
-                        class="bi bi-bar-chart-line mb-3" style="color: #444;" viewBox="0 0 16 16">
-                        <path
-                            d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3zM1 14v-3h3v3H1zm4 0v-3h3v3H5zm4 0v-3h3v3H9zm4 0v-3h3v3h-3z" />
-                    </svg>
-                    <p class="mb-0">No data available. Add books with purchase dates and finish dates to see the chart.
-                    </p>
+    <!-- Reading insights -->
+    <h5 class="mb-3">Reading Insights</h5>
+    <div class="row g-4 mb-5">
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted mb-3">Unread Asset Value</h6>
+                    <div class="progress mb-3" style="height: 22px;">
+                        <div class="progress-bar bg-success" style="width: {{ $readPct }}%">
+                            {{ $readPct > 8 ? $readPct . '%' : '' }}</div>
+                        <div class="progress-bar bg-warning text-dark" style="width: {{ $unreadPct }}%">
+                            {{ $unreadPct > 8 ? $unreadPct . '%' : '' }}</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="badge bg-success">Read</span>
+                            <div class="fs-5 fw-semibold">Rp {{ number_format($readValue, 0, ',', '.') }}</div>
+                            <small class="text-muted">{{ $readPct }}% of collection value</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-warning text-dark">Unread</span>
+                            <div class="fs-5 fw-semibold">Rp {{ number_format($unreadValue, 0, ',', '.') }}</div>
+                            <small class="text-muted">{{ $unreadPct }}% of collection value</small>
+                        </div>
+                    </div>
                 </div>
-            @else
-                <canvas id="dashboardChart" style="max-height: 400px;"></canvas>
-            @endif
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-2">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Backlog</h6>
+                    <h2 class="mb-0">{{ $backlog }}</h2>
+                    <small class="text-muted">owned, not finished</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-2">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Avg Cost / Book</h6>
+                    <h4 class="mb-0">{{ $avgCost !== null ? 'Rp ' . number_format($avgCost, 0, ',', '.') : '-' }}</h4>
+                    <small class="text-muted">free books included</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-2">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Reading Pace</h6>
+                    @if ($pace['average'] !== null)
+                        <h4 class="mb-0">{{ $pace['average'] }} days/book</h4>
+                        <small class="text-muted d-block">median {{ $pace['median'] }} days</small>
+                        <small class="text-muted">based on {{ $pace['count'] }}
+                            {{ \Illuminate\Support\Str::plural('book', $pace['count']) }}</small>
+                    @else
+                        <h4 class="mb-0">-</h4>
+                        <small class="text-muted">needs start & finish dates</small>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -81,125 +162,117 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const canvas = document.getElementById('dashboardChart');
-            if (!canvas) return;
+            const chart = @json($chart);
+            const text = '#e0e0e0';
+            const grid = '#333';
 
-            const chartData = @json($chartData);
+            const formatShort = v => v >= 1000000 ? (v / 1000000).toFixed(1) + 'M' :
+                v >= 1000 ? (v / 1000).toFixed(0) + 'k' : String(v);
+            const formatFull = v => 'Rp ' + Number(v).toLocaleString('id-ID');
 
-            // Limit to last 12 months
-            const last12MonthsData = chartData.slice(-12);
-
-            // IDR formatter
-            const formatIDR = (value) => {
-                if (value >= 1000000) {
-                    return (value / 1000000).toFixed(1) + 'M';
-                } else if (value >= 1000) {
-                    return (value / 1000).toFixed(0) + 'k';
-                }
-                return value.toString();
-            };
-
-            const formatIDRFull = (value) => {
-                return 'Rp ' + value.toLocaleString('id-ID');
-            };
-
-            new Chart(canvas, {
-                type: 'bar',
-                data: {
-                    labels: last12MonthsData.map(d => d.month),
-                    datasets: [{
-                            label: 'Expenses (Rp)',
-                            data: last12MonthsData.map(d => Number(d.expenses)),
-                            backgroundColor: 'rgba(13, 110, 253, 0.5)',
-                            borderColor: 'rgba(13, 110, 253, 1)',
-                            borderWidth: 1,
-                            yAxisID: 'y'
-                        },
-                        {
-                            label: 'Books Completed',
-                            data: last12MonthsData.map(d => Number(d.books_completed)),
-                            backgroundColor: 'rgba(25, 135, 84, 0.5)',
-                            borderColor: 'rgba(25, 135, 84, 1)',
-                            borderWidth: 1,
-                            yAxisID: 'y1'
+            const baseOptions = (yExtra = {}) => ({
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: text
                         }
-                    ]
+                    }
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: '#e0e0e0'
-                            }
+                scales: {
+                    x: {
+                        ticks: {
+                            color: text
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.dataset.yAxisID === 'y') {
-                                        label += formatIDRFull(context.parsed.y);
-                                    } else {
-                                        label += context.parsed.y;
-                                    }
-                                    return label;
-                                }
-                            }
+                        grid: {
+                            color: grid
                         }
                     },
-                    scales: {
-                        x: {
-                            ticks: {
-                                color: '#e0e0e0'
-                            },
-                            grid: {
-                                color: '#333'
-                            }
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: text
                         },
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            title: {
-                                display: true,
-                                text: 'Expenses (Rp)',
-                                color: '#e0e0e0'
-                            },
-                            ticks: {
-                                color: '#e0e0e0',
-                                callback: function(value) {
-                                    return formatIDR(value);
-                                }
-                            },
-                            grid: {
-                                color: '#333'
-                            },
-                            beginAtZero: true
+                        grid: {
+                            color: grid
                         },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            title: {
-                                display: true,
-                                text: 'Books Completed',
-                                color: '#e0e0e0'
-                            },
-                            ticks: {
-                                color: '#e0e0e0',
-                                stepSize: 1
-                            },
-                            grid: {
-                                drawOnChartArea: false
-                            },
-                            beginAtZero: true
-                        }
+                        ...yExtra
                     }
                 }
             });
+
+            const spendingCanvas = document.getElementById('spendingChart');
+            if (spendingCanvas) {
+                const opts = baseOptions({
+                    ticks: {
+                        color: text,
+                        callback: v => formatShort(v)
+                    },
+                    title: {
+                        display: true,
+                        text: 'Spent (Rp)',
+                        color: text
+                    }
+                });
+                opts.plugins.legend.display = false;
+                opts.plugins.tooltip = {
+                    callbacks: {
+                        label: c => formatFull(c.parsed.y)
+                    }
+                };
+
+                new Chart(spendingCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: chart.labels,
+                        datasets: [{
+                            label: 'Spent (Rp)',
+                            data: chart.spending.map(Number),
+                            backgroundColor: 'rgba(13, 110, 253, 0.5)',
+                            borderColor: 'rgba(13, 110, 253, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: opts
+                });
+            }
+
+            const volumeCanvas = document.getElementById('volumeChart');
+            if (volumeCanvas) {
+                new Chart(volumeCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: chart.labels,
+                        datasets: [{
+                                label: 'Bought',
+                                data: chart.bought.map(Number),
+                                backgroundColor: 'rgba(255, 193, 7, 0.5)',
+                                borderColor: 'rgba(255, 193, 7, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Finished',
+                                data: chart.finished.map(Number),
+                                backgroundColor: 'rgba(25, 135, 84, 0.5)',
+                                borderColor: 'rgba(25, 135, 84, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: baseOptions({
+                        ticks: {
+                            color: text,
+                            stepSize: 1,
+                            precision: 0
+                        },
+                        title: {
+                            display: true,
+                            text: 'Books',
+                            color: text
+                        }
+                    })
+                });
+            }
         });
     </script>
 @endpush
