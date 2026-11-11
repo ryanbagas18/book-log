@@ -11,8 +11,8 @@ class RentalSeeder extends Seeder
 {
     public function run(): void
     {
-        $customer = User::where('email', 'customer.complete@example.test')->first();
-        $admin = User::where('email', 'admin@ryanlibrary.test')->first();
+        $customer = User::where('email', 'ryan@booklog.test')->first();
+        $admin = User::where('email', 'admin@booklog.test')->first();
 
         if (! $customer || ! $admin) {
             return;

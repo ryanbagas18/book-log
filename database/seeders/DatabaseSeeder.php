@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Pre-v2 books belong to the owner's personal log.
-        $adminId = User::where('email', 'admin@ryanlibrary.test')->value('id');
+        $adminId = User::where('email', 'admin@booklog.test')->value('id');
         Book::whereNull('user_id')->update(['user_id' => $adminId]);
     }
 }

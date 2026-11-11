@@ -144,9 +144,9 @@ Without `RENTAL_BANK_*` values the booking page warns that bank details are not 
 
 Seeded dev accounts (password `password` for all, dev only):
 
-- `admin@ryanlibrary.test` — admin
-- `customer.complete@example.test` — customer with complete profile
-- `customer.incomplete@example.test` — customer with incomplete profile
+- `admin@booklog.test` — admin
+- `ryan@booklog.test` — customer with complete profile
+- `bagas@booklog.test` — customer with incomplete profile
 
 ### Password reset
 
