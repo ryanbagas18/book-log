@@ -8,7 +8,7 @@
         <h1 class="fw-bold mb-1">My Rentals</h1>
         <p class="text-muted mb-0">Your Ryan Library bookings.</p>
     </div>
-    <a href="{{ route('library.index') }}" class="btn btn-primary fw-bold">Browse Library</a>
+    <a href="{{ route('library.index') }}" class="btn btn-primary fw-bold">Browse Ryan Library</a>
 </div>
 
 <div class="card">

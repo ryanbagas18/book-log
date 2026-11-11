@@ -153,7 +153,7 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('library.index') }}">
-                                Library
+                                Ryan Library
                             </a>
                         </li>
                         <li class="nav-item">
@@ -199,7 +199,7 @@
                 @else
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('library.index') }}">Library</a>
+                            <a class="nav-link" href="{{ route('library.index') }}">Ryan Library</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
