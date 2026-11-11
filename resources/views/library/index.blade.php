@@ -177,6 +177,18 @@
         .promo-arrow-next {
             right: 12px;
         }
+        #promoCarousel .carousel-inner {
+            aspect-ratio: 1920 / 1735;
+        }
+        #promoCarousel .carousel-item {
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #555 transparent;
+        }
+        #promoCarousel .carousel-item img {
+            width: 100%;
+            height: auto;
+        }
     </style>
 @endguest
 @endsection
