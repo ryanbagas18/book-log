@@ -5,7 +5,7 @@
 @section('admin')
 <div class="mb-4">
     <h1 class="fw-bold">Admin dashboard</h1>
-    <p class="text-muted">Ryan Library administration.</p>
+    <p class="text-muted">Ryan's Library administration.</p>
 </div>
 
 <div class="row g-4 mb-4">

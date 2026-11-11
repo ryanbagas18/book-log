@@ -113,9 +113,9 @@ A clean Laravel 11 web application for tracking personal book collections and re
 
 9. Open your browser and visit: `http://localhost:8000`
 
-## Ryan Library (rental platform)
+## Ryan's Library (rental platform)
 
-The app is a hybrid: a per-user personal book tracker plus a commercial book rental service ("Ryan Library").
+The app is a hybrid: a per-user personal book tracker plus a commercial book rental service ("Ryan's Library").
 
 - **Public catalog** at `/library` with search and genre filters; `/terms` holds the rental terms
 - **Customer flow**: browse catalog -> book a rental (delivery or pickup) -> upload a bank-transfer proof -> owner verifies -> hand-over -> return -> deposit refund

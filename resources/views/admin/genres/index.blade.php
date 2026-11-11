@@ -6,7 +6,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h1 class="fw-bold mb-1">Genres</h1>
-        <p class="text-muted mb-0">Catalog genres for Ryan Library.</p>
+        <p class="text-muted mb-0">Catalog genres for Ryan's Library.</p>
     </div>
     <a href="{{ route('admin.genres.create') }}" class="btn btn-primary fw-bold">Add Genre</a>
 </div>

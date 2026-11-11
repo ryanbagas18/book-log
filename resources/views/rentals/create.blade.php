@@ -5,7 +5,7 @@
 @section('content')
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('library.index') }}" class="text-decoration-none">Ryan Library</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('library.index') }}" class="text-decoration-none">Ryan's Library</a></li>
         <li class="breadcrumb-item"><a href="{{ route('library.show', $book) }}" class="text-decoration-none">{{ $book->title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">Rent</li>
     </ol>
