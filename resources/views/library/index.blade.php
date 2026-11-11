@@ -119,123 +119,13 @@
                     </a>
                 </div>
                 <div class="col-md-5">
-                    <div class="mockup-browser">
-                        <div class="mockup-bar">
-                            <span class="mockup-dot"></span>
-                            <span class="mockup-dot"></span>
-                            <span class="mockup-dot"></span>
-                        </div>
-                        <div class="mockup-body">
-                            <div class="mockup-nav">
-                                <span class="mockup-brand">Book Log</span>
-                                <span>Dashboard</span>
-                                <span>My Books</span>
-                            </div>
-                            <div class="mockup-grid">
-                                <div class="mockup-card">
-                                    <div class="mockup-cover" style="background:#3d5a80;"></div>
-                                    <div class="mockup-line w-75"></div>
-                                    <div class="mockup-line w-50"></div>
-                                </div>
-                                <div class="mockup-card">
-                                    <div class="mockup-cover" style="background:#6d597a;"></div>
-                                    <div class="mockup-line w-75"></div>
-                                    <div class="mockup-line w-50"></div>
-                                </div>
-                                <div class="mockup-card">
-                                    <div class="mockup-cover" style="background:#b08968;"></div>
-                                    <div class="mockup-line w-75"></div>
-                                    <div class="mockup-line w-50"></div>
-                                </div>
-                            </div>
-                            <div class="mockup-chart">
-                                <div class="mockup-bar-col" style="height:35%;"></div>
-                                <div class="mockup-bar-col" style="height:55%;"></div>
-                                <div class="mockup-bar-col" style="height:45%;"></div>
-                                <div class="mockup-bar-col" style="height:70%;"></div>
-                                <div class="mockup-bar-col" style="height:60%;"></div>
-                                <div class="mockup-bar-col" style="height:85%;"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <img src="{{ asset('images/book-log-dashboard.webp') }}" alt="Book Log analytics dashboard"
+                        class="img-fluid rounded shadow mb-3" style="border: 1px solid #333;">
+                    <img src="{{ asset('images/book-log-collection.webp') }}" alt="Book Log book collection"
+                        class="img-fluid rounded shadow" style="border: 1px solid #333;">
                 </div>
             </div>
         </div>
     </div>
-    <style>
-        .mockup-browser {
-            border: 1px solid #333;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #1a1a1a;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-        }
-        .mockup-bar {
-            display: flex;
-            gap: 6px;
-            padding: 10px 12px;
-            background: #252525;
-            border-bottom: 1px solid #333;
-        }
-        .mockup-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #444;
-        }
-        .mockup-body {
-            padding: 14px;
-        }
-        .mockup-nav {
-            display: flex;
-            gap: 14px;
-            font-size: 0.7rem;
-            color: #888;
-            margin-bottom: 12px;
-        }
-        .mockup-brand {
-            color: #fff;
-            font-weight: 700;
-        }
-        .mockup-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        .mockup-card {
-            background: #252525;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 8px;
-        }
-        .mockup-cover {
-            height: 56px;
-            border-radius: 4px;
-            margin-bottom: 8px;
-        }
-        .mockup-line {
-            height: 6px;
-            border-radius: 3px;
-            background: #444;
-            margin-bottom: 5px;
-        }
-        .mockup-chart {
-            display: flex;
-            align-items: flex-end;
-            gap: 6px;
-            height: 64px;
-            background: #252525;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 10px;
-        }
-        .mockup-bar-col {
-            flex: 1;
-            background: #0d6efd;
-            border-radius: 3px 3px 0 0;
-            opacity: 0.85;
-        }
-    </style>
 @endguest
 @endsection
