@@ -119,10 +119,28 @@
                     </a>
                 </div>
                 <div class="col-md-5">
-                    <img src="{{ asset('images/book-log-dashboard.webp') }}" alt="Book Log analytics dashboard"
-                        class="img-fluid rounded shadow mb-3" style="border: 1px solid #333;">
-                    <img src="{{ asset('images/book-log-collection.webp') }}" alt="Book Log book collection"
-                        class="img-fluid rounded shadow" style="border: 1px solid #333;">
+                    <div id="promoCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner rounded shadow" style="border: 1px solid #333;">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('images/book-log-dashboard.webp') }}" class="d-block w-100"
+                                    alt="Book Log analytics dashboard">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('images/book-log-collection.webp') }}" class="d-block w-100"
+                                    alt="Book Log book collection">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
