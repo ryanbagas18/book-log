@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BookSeeder::class,
             LibraryCatalogSeeder::class,
+            RentalSeeder::class,
         ]);
 
         // Pre-v2 books belong to the owner's personal log.

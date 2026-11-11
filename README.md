@@ -113,25 +113,58 @@ A clean Laravel 11 web application for tracking personal book collections and re
 
 9. Open your browser and visit: `http://localhost:8000`
 
+## Ryan Library (rental platform)
+
+The app is a hybrid: a per-user personal book tracker plus a commercial book rental service ("Ryan Library").
+
+- **Public catalog** at `/library` with search and genre filters; `/terms` holds the rental terms
+- **Customer flow**: browse catalog -> book a rental (delivery or pickup) -> upload a bank-transfer proof -> owner verifies -> hand-over -> return -> deposit refund
+- **Admin area** at `/admin` (admin role only): dashboard stats, rentals verification/circulation, genres, library book catalog
+- Payment is a **manual bank transfer**; proofs are stored on the private disk (`storage/app/private/payment-proofs`) and served only through an authorized route
+- Money is stored as integer Rupiah; `formatRupiah()` renders "Rp 12.500"
+- Rental prices and deposit are snapshotted on the booking; stock decrements on approval and increments on return
+
+### Environment variables (rental)
+
+```
+RENTAL_BANK_NAME=           # bank name shown on the booking page
+RENTAL_BANK_ACCOUNT_NUMBER= # account number customers transfer to
+RENTAL_BANK_ACCOUNT_HOLDER= # account holder name
+RENTAL_MAX_DAYS=30          # maximum rental length in days
+```
+
+Without `RENTAL_BANK_*` values the booking page warns that bank details are not configured.
+
+### Accounts and roles
+
+- `admin` — the owner; sees `/admin` and all customer data needed for verification
+- `customer` — personal book log + rentals; must complete their profile (name, email, phone, address) before renting
+
+`role` is never mass-assignable; registration always creates `customer`.
+
+Seeded dev accounts (password `password` for all, dev only):
+
+- `admin@ryanlibrary.test` — admin
+- `customer.complete@example.test` — customer with complete profile
+- `customer.incomplete@example.test` — customer with incomplete profile
+
+### Password reset
+
+Forgot-password is intentionally not implemented (needs SMTP). Reset via tinker:
+
+```bash
+php artisan tinker
+>>> $u = App\Models\User::where('email', 'user@example.com')->first();
+>>> $u->password = 'new-password'; $u->save();
+```
+
+### Backup
+
+Back up the database regularly, and also `storage/app/private` — it holds payment proofs and other sensitive uploads that are not in the database.
+
 ## Database Schema
 
-The `books` table includes:
-
-- Basic info: title, author, ISBN, genre, language, pages
-- Reading tracking: status, rating, started_at, finished_at
-- Ownership: ownership type, purchase place, condition, purchase date, price
-- Cover image and notes
-- Soft deletes enabled
-
-## Notes
-
-- The application now requires authentication; personal books are scoped per user
-- Roles: `admin` (Ryan Library owner) and `customer`. `role` is not mass-assignable
-- Password reset / forgot-password is intentionally out of scope (needs SMTP); admins reset passwords via `php artisan tinker`
-- Profile is considered "complete" when name, email, phone and address are all filled; the `profile.complete` middleware guards flows that need it
-- Seeded dev users all use the password `password` (dev only, see seeder warning)
-- All prices are in Indonesian Rupiah (Rp)
-- Currency format: "Rp 12.500" (dot as thousands separator, no decimals)
-- Price of 0 displays as "Free"
-- Cover images are stored in `storage/app/public/covers`
-- With soft deletes, cover images are retained even after deletion
+- `books` — personal reading/purchase log per user (soft deletes)
+- `genres`, `library_books` — rental catalog (library books soft-delete only)
+- `rentals`, `payments` — bookings and transfer proofs
+- `users` — role, phone, address in addition to Laravel defaults
