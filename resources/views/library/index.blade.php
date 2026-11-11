@@ -94,4 +94,212 @@
         </div>
     </div>
 @endif
+
+@guest
+    <div class="card mt-5">
+        <div class="card-body p-4">
+            <div class="row align-items-center g-4">
+                <div class="col-md-7">
+                    <h2 class="fw-bold mb-2">Consumerism disguised as intellectualism — we know.</h2>
+                    <p class="text-muted mb-3">
+                        Ryan's Library is for renting. With a free Book Log account you can also
+                        <strong>catalog the books you own</strong>, track your reading status and
+                        ratings — and see exactly what your habit costs you.
+                    </p>
+                    <ul class="text-muted mb-3">
+                        <li>Analytics dashboard: monthly spending, books bought vs. finished</li>
+                        <li>Know the value of your unread collection and your reading speed</li>
+                        <li>Log books you own, borrow, or want to read — with ratings</li>
+                    </ul>
+                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg fw-bold me-2">
+                        Create Free Account
+                    </a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-secondary">
+                        I already have an account
+                    </a>
+                </div>
+                <div class="col-md-5">
+                    <div id="promoCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner rounded shadow" style="border: 1px solid #333;">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('images/book-log-dashboard.webp') }}" class="d-block w-100 promo-zoom"
+                                    alt="Book Log analytics dashboard">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('images/book-log-api-search.webp') }}" class="d-block w-100 promo-zoom"
+                                    alt="Book Log API book search">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('images/book-log-collection.webp') }}" class="d-block w-100 promo-zoom"
+                                    alt="Book Log book collection">
+                            </div>
+                        </div>
+                        <button class="promo-arrow promo-arrow-prev" type="button" data-bs-target="#promoCarousel"
+                            data-bs-slide="prev" aria-label="Previous">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                            </svg>
+                        </button>
+                        <button class="promo-arrow promo-arrow-next" type="button" data-bs-target="#promoCarousel"
+                            data-bs-slide="next" aria-label="Next">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .promo-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #555;
+            background: rgba(30, 30, 30, 0.85);
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: background 0.2s;
+        }
+        .promo-arrow:hover {
+            background: rgba(45, 45, 45, 0.95);
+        }
+        .promo-arrow-prev {
+            left: 12px;
+        }
+        .promo-arrow-next {
+            right: 12px;
+        }
+        #promoCarousel .carousel-inner {
+            aspect-ratio: 1920 / 1735;
+        }
+        #promoCarousel .carousel-item {
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #555 transparent;
+        }
+        #promoCarousel .carousel-item img {
+            width: 100%;
+            height: auto;
+            cursor: zoom-in;
+        }
+        #promoLightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 24px;
+            overflow: hidden;
+        }
+        #promoLightbox.open {
+            display: flex;
+        }
+        #promoLightbox img {
+            max-width: 92vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+            transition: transform 0.15s ease;
+            cursor: zoom-in;
+        }
+        #promoLightbox .promo-lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #555;
+            background: rgba(30, 30, 30, 0.9);
+            color: #e0e0e0;
+            font-size: 1.25rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+    </style>
+    <div id="promoLightbox">
+        <button type="button" class="promo-lightbox-close" aria-label="Close">&times;</button>
+        <img src="" alt="">
+    </div>
+@endguest
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const lightbox = document.getElementById('promoLightbox');
+            if (!lightbox) return;
+
+            const lightboxImg = lightbox.querySelector('img');
+            let zoom = 1;
+
+            function applyZoom(clientX, clientY) {
+                const rect = lightboxImg.getBoundingClientRect();
+                const originX = ((clientX - rect.left) / rect.width * 100).toFixed(1);
+                const originY = ((clientY - rect.top) / rect.height * 100).toFixed(1);
+                lightboxImg.style.transformOrigin = originX + '% ' + originY + '%';
+                lightboxImg.style.transform = 'scale(' + zoom + ')';
+            }
+
+            function setZoom(value, clientX, clientY) {
+                zoom = Math.min(4, Math.max(1, value));
+                lightboxImg.style.cursor = zoom > 1 ? 'zoom-out' : 'zoom-in';
+                applyZoom(clientX !== undefined ? clientX : window.innerWidth / 2,
+                    clientY !== undefined ? clientY : window.innerHeight / 2);
+            }
+
+            document.querySelectorAll('.promo-zoom').forEach(function(img) {
+                img.addEventListener('click', function() {
+                    lightboxImg.src = this.src;
+                    lightboxImg.alt = this.alt;
+                    zoom = 1;
+                    lightboxImg.style.transform = '';
+                    lightboxImg.style.transformOrigin = '';
+                    lightboxImg.style.cursor = 'zoom-in';
+                    lightbox.classList.add('open');
+                });
+            });
+
+            lightboxImg.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                setZoom(zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY);
+            }, { passive: false });
+
+            lightboxImg.addEventListener('click', function(e) {
+                if (e.detail === 2) return;
+                setZoom(zoom > 1 ? 1 : 2, e.clientX, e.clientY);
+            });
+
+            lightboxImg.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+                setZoom(zoom > 1 ? 1 : 2.5, e.clientX, e.clientY);
+            });
+
+            function closeLightbox() {
+                lightbox.classList.remove('open');
+            }
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target !== lightboxImg) closeLightbox();
+            });
+            lightbox.querySelector('.promo-lightbox-close').addEventListener('click', closeLightbox);
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeLightbox();
+            });
+        });
+    </script>
+@endpush
 @endsection
