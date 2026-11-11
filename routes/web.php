@@ -20,15 +20,25 @@ Route::middleware('guest')->group(function () {
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+// Books are personal: resolve {book} only within the current user's collection.
+Route::bind('book', function (string $value) {
+    $user = auth()->user();
+    abort_if(! $user, 404);
 
-Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
+    return $user->books()->findOrFail($value);
+});
 
-Route::get('/api/books/search', [BookController::class, 'searchBooks'])->name('books.search');
-Route::get('/books/export', [BookController::class, 'export'])->name('books.export');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-Route::resource('books', BookController::class);
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/api/books/search', [BookController::class, 'searchBooks'])->name('books.search');
+    Route::get('/books/export', [BookController::class, 'export'])->name('books.export');
+
+    Route::resource('books', BookController::class);
+});
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', function () {

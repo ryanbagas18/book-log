@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,7 +11,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         // Eloquent query menggunakan scopeOwned() dari model Book
-        $owned = Book::owned()
+        $owned = $request->user()->books()->owned()
             ->get(['id', 'status', 'price', 'purchase_date', 'started_at', 'finished_at']);
 
         $range = in_array($request->query('range'), ['12', '24', 'all'], true)

@@ -40,6 +40,11 @@ class Book extends Model
         'price' => 'integer',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getFormattedPriceAttribute(): string
     {
         if ($this->price === 0) {

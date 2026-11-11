@@ -16,7 +16,7 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Book::query();
+        $query = $request->user()->books();
 
         // Search
         if ($request->filled('q')) {
@@ -58,14 +58,15 @@ class BookController extends Controller
         $currentMonth = now()->month;
         $currentYear = now()->year;
 
-        $spentThisMonth = Book::where('ownership', 'owned')
+        $spentThisMonth = $request->user()->books()->owned()
             ->whereMonth('purchase_date', $currentMonth)
             ->whereYear('purchase_date', $currentYear)
             ->sum('price');
 
-        $totalSpentAllTime = Book::where('ownership', 'owned')->sum('price');
+        $totalSpentAllTime = $request->user()->books()->owned()->sum('price');
 
-        $finishedThisYear = Book::where('status', 'finished')
+        $finishedThisYear = $request->user()->books()
+            ->where('status', 'finished')
             ->whereYear('finished_at', $currentYear)
             ->count();
 
@@ -88,10 +89,10 @@ class BookController extends Controller
     /**
      * Export books to CSV.
      */
-    public function export()
+    public function export(Request $request)
     {
-        $books = Book::all();
-        
+        $books = $request->user()->books()->get();
+
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="book-inventory-' . date('Y-m-d') . '.csv',
@@ -100,7 +101,7 @@ class BookController extends Controller
         $callback = function() use ($books) {
             $file = fopen('php://output', 'w');
             fputcsv($file, ['Title', 'Author', 'Genre', 'Language', 'Pages', 'ISBN', 'Status', 'Rating', 'Ownership', 'Purchase Place', 'Condition', 'Purchase Date', 'Price', 'Notes']);
-            
+
             foreach ($books as $book) {
                 fputcsv($file, [
                     $book->title,
@@ -119,7 +120,7 @@ class BookController extends Controller
                     $book->notes,
                 ]);
             }
-            
+
             fclose($file);
         };
 
@@ -155,7 +156,7 @@ class BookController extends Controller
             $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
         }
 
-        Book::create($data);
+        $request->user()->books()->create($data);
 
         return redirect()->route('books.index')->with('success', 'Book added successfully!');
     }
@@ -163,16 +164,20 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show(Request $request, Book $book)
     {
+        $this->authorize('view', $book);
+
         return view('books.show', compact('book'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Book $book)
+    public function edit(Request $request, Book $book)
     {
+        $this->authorize('update', $book);
+
         return view('books.edit', compact('book'));
     }
 
@@ -181,6 +186,8 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
+        $this->authorize('update', $book);
+
         $data = $request->validated();
 
         if ($request->hasFile('cover_image')) {
@@ -199,8 +206,10 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
+    public function destroy(Request $request, Book $book)
     {
+        $this->authorize('delete', $book);
+
         $book->delete();
 
         return redirect()->route('books.index')->with('success', 'Book deleted successfully!');

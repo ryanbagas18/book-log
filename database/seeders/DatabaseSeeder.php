@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Book;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,5 +17,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BookSeeder::class,
         ]);
+
+        // Pre-v2 books belong to the owner's personal log.
+        $adminId = User::where('email', 'admin@ryanlibrary.test')->value('id');
+        Book::whereNull('user_id')->update(['user_id' => $adminId]);
     }
 }

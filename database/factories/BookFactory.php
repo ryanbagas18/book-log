@@ -40,12 +40,16 @@ class BookFactory extends Factory
         $ownership = fake()->randomElement($ownerships);
         $condition = $ownership === 'owned' ? fake()->randomElement($conditions) : null;
         $purchasePlace = $ownership === 'owned' ? fake()->randomElement($purchasePlaces) : null;
-        $purchaseDate = $ownership === 'owned' ? fake()->dateBetween('-2 years', 'now') : null;
+        $purchaseDate = $ownership === 'owned' ? fake()->dateTimeBetween('-2 years', 'now')->format('Y-m-d') : null;
         $price = $ownership === 'owned' && $purchasePlace !== 'Gifted/Free' ? fake()->numberBetween(50000, 500000) : 0;
 
         $status = fake()->randomElement($statuses);
-        $startedAt = in_array($status, ['reading', 'finished', 'dropped']) ? fake()->dateBetween('-1 year', 'now') : null;
-        $finishedAt = $status === 'finished' ? fake()->optional(0.8)->dateBetween($startedAt ?? '-1 year', 'now') : null;
+        $startedAt = in_array($status, ['reading', 'finished', 'dropped']) ? fake()->dateTimeBetween('-1 year', 'now')->format('Y-m-d') : null;
+        $finishedAt = null;
+        if ($status === 'finished') {
+            $finished = fake()->optional(0.8)->dateTimeBetween($startedAt ?? '-1 year', 'now');
+            $finishedAt = $finished?->format('Y-m-d');
+        }
 
         return [
             'title' => fake()->randomElement($titles),
