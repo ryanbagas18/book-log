@@ -104,12 +104,12 @@
                     <p class="text-muted mb-3">
                         Ryan Library is for renting. With a free Book Log account you can also
                         <strong>catalog the books you own</strong>, track your reading status and
-                        ratings, and see personal analytics — all in one place.
+                        ratings — and see exactly what your habit costs you.
                     </p>
                     <ul class="text-muted mb-3">
-                        <li>Log books you own, borrow, or want to read</li>
-                        <li>Rate and track your reading progress</li>
-                        <li>Visual dashboard of your reading habits</li>
+                        <li>Analytics dashboard: monthly spending, books bought vs. finished</li>
+                        <li>Know the value of your unread collection and your reading speed</li>
+                        <li>Log books you own, borrow, or want to read — with ratings</li>
                     </ul>
                     <a href="{{ route('register') }}" class="btn btn-primary btn-lg fw-bold me-2">
                         Create Free Account
