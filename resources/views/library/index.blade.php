@@ -122,11 +122,11 @@
                     <div id="promoCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner rounded shadow" style="border: 1px solid #333;">
                             <div class="carousel-item active">
-                                <img src="{{ asset('images/book-log-dashboard.webp') }}" class="d-block w-100"
+                                <img src="{{ asset('images/book-log-dashboard.webp') }}" class="d-block w-100 promo-zoom"
                                     alt="Book Log analytics dashboard">
                             </div>
                             <div class="carousel-item">
-                                <img src="{{ asset('images/book-log-collection.webp') }}" class="d-block w-100"
+                                <img src="{{ asset('images/book-log-collection.webp') }}" class="d-block w-100 promo-zoom"
                                     alt="Book Log book collection">
                             </div>
                         </div>
@@ -188,7 +188,76 @@
         #promoCarousel .carousel-item img {
             width: 100%;
             height: auto;
+            cursor: zoom-in;
+        }
+        #promoLightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 24px;
+        }
+        #promoLightbox.open {
+            display: flex;
+        }
+        #promoLightbox img {
+            max-width: 92vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+        }
+        #promoLightbox .promo-lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #555;
+            background: rgba(30, 30, 30, 0.9);
+            color: #e0e0e0;
+            font-size: 1.25rem;
+            line-height: 1;
+            cursor: pointer;
         }
     </style>
+    <div id="promoLightbox">
+        <button type="button" class="promo-lightbox-close" aria-label="Close">&times;</button>
+        <img src="" alt="">
+    </div>
 @endguest
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const lightbox = document.getElementById('promoLightbox');
+            if (!lightbox) return;
+
+            const lightboxImg = lightbox.querySelector('img');
+
+            document.querySelectorAll('.promo-zoom').forEach(function(img) {
+                img.addEventListener('click', function() {
+                    lightboxImg.src = this.src;
+                    lightboxImg.alt = this.alt;
+                    lightbox.classList.add('open');
+                });
+            });
+
+            function closeLightbox() {
+                lightbox.classList.remove('open');
+            }
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target !== lightboxImg) closeLightbox();
+            });
+            lightbox.querySelector('.promo-lightbox-close').addEventListener('click', closeLightbox);
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeLightbox();
+            });
+        });
+    </script>
+@endpush
 @endsection
