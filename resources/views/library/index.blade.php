@@ -199,6 +199,7 @@
             justify-content: center;
             z-index: 2000;
             padding: 24px;
+            overflow: hidden;
         }
         #promoLightbox.open {
             display: flex;
@@ -208,6 +209,8 @@
             max-height: 90vh;
             border-radius: 8px;
             box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+            transition: transform 0.15s ease;
+            cursor: zoom-in;
         }
         #promoLightbox .promo-lightbox-close {
             position: absolute;
@@ -237,13 +240,43 @@
             if (!lightbox) return;
 
             const lightboxImg = lightbox.querySelector('img');
+            let zoom = 1;
+
+            function applyZoom(clientX, clientY) {
+                const rect = lightboxImg.getBoundingClientRect();
+                const originX = ((clientX - rect.left) / rect.width * 100).toFixed(1);
+                const originY = ((clientY - rect.top) / rect.height * 100).toFixed(1);
+                lightboxImg.style.transformOrigin = originX + '% ' + originY + '%';
+                lightboxImg.style.transform = 'scale(' + zoom + ')';
+            }
+
+            function setZoom(value, clientX, clientY) {
+                zoom = Math.min(4, Math.max(1, value));
+                lightboxImg.style.cursor = zoom > 1 ? 'zoom-out' : 'zoom-in';
+                applyZoom(clientX !== undefined ? clientX : window.innerWidth / 2,
+                    clientY !== undefined ? clientY : window.innerHeight / 2);
+            }
 
             document.querySelectorAll('.promo-zoom').forEach(function(img) {
                 img.addEventListener('click', function() {
                     lightboxImg.src = this.src;
                     lightboxImg.alt = this.alt;
+                    zoom = 1;
+                    lightboxImg.style.transform = '';
+                    lightboxImg.style.transformOrigin = '';
+                    lightboxImg.style.cursor = 'zoom-in';
                     lightbox.classList.add('open');
                 });
+            });
+
+            lightboxImg.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                setZoom(zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY);
+            }, { passive: false });
+
+            lightboxImg.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+                setZoom(zoom > 1 ? 1 : 2.5, e.clientX, e.clientY);
             });
 
             function closeLightbox() {
