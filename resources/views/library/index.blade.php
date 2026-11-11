@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Ryan Library')
+@section('title', "Ryan's Library")
 
 @section('content')
 <div class="mb-4">
-    <h1 class="fw-bold">Ryan Library</h1>
+    <h1 class="fw-bold">Ryan's Library</h1>
     <p class="text-muted mb-0">Browse our book rental catalog.</p>
 </div>
 
@@ -102,7 +102,7 @@
                 <div class="col-md-7">
                     <h2 class="fw-bold mb-2">Consumerism disguised as intellectualism — we know.</h2>
                     <p class="text-muted mb-3">
-                        Ryan Library is for renting. With a free Book Log account you can also
+                        Ryan's Library is for renting. With a free Book Log account you can also
                         <strong>catalog the books you own</strong>, track your reading status and
                         ratings — and see exactly what your habit costs you.
                     </p>

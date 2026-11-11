@@ -6,9 +6,9 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h1 class="fw-bold mb-1">My Rentals</h1>
-        <p class="text-muted mb-0">Your Ryan Library bookings.</p>
+        <p class="text-muted mb-0">Your bookings at Ryan's Library.</p>
     </div>
-    <a href="{{ route('library.index') }}" class="btn btn-primary fw-bold">Browse Ryan Library</a>
+    <a href="{{ route('library.index') }}" class="btn btn-primary fw-bold">Browse Ryan's Library</a>
 </div>
 
 <div class="card">
