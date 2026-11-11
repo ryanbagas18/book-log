@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\LibraryBookController;
+use App\Http\Controllers\Admin\RentalController as AdminRentalController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CatalogController;
@@ -59,9 +61,15 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('rentals', [AdminRentalController::class, 'index'])->name('rentals.index');
+    Route::get('rentals/{rental}', [AdminRentalController::class, 'show'])->name('rentals.show');
+    Route::post('rentals/{rental}/approve', [AdminRentalController::class, 'approve'])->name('rentals.approve');
+    Route::post('rentals/{rental}/reject', [AdminRentalController::class, 'reject'])->name('rentals.reject');
+    Route::post('rentals/{rental}/hand-over', [AdminRentalController::class, 'handOver'])->name('rentals.hand-over');
+    Route::post('rentals/{rental}/return', [AdminRentalController::class, 'markReturned'])->name('rentals.return');
+    Route::post('rentals/{rental}/refund-deposit', [AdminRentalController::class, 'refundDeposit'])->name('rentals.refund-deposit');
 
     Route::resource('genres', GenreController::class)->except('show');
     Route::resource('library-books', LibraryBookController::class)->except('show');

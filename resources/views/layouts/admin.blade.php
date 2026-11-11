@@ -7,6 +7,10 @@
             href="{{ route('admin.dashboard') }}">Dashboard</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.rentals.*') ? 'active' : '' }}"
+            href="{{ route('admin.rentals.index') }}">Rentals</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('admin.genres.*') ? 'active' : '' }}"
             href="{{ route('admin.genres.index') }}">Genres</a>
     </li>
