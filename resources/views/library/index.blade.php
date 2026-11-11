@@ -130,20 +130,53 @@
                                     alt="Book Log book collection">
                             </div>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
+                        <button class="promo-arrow promo-arrow-prev" type="button" data-bs-target="#promoCarousel"
+                            data-bs-slide="prev" aria-label="Previous">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                            </svg>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
+                        <button class="promo-arrow promo-arrow-next" type="button" data-bs-target="#promoCarousel"
+                            data-bs-slide="next" aria-label="Next">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <style>
+        .promo-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #555;
+            background: rgba(30, 30, 30, 0.85);
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: background 0.2s;
+        }
+        .promo-arrow:hover {
+            background: rgba(45, 45, 45, 0.95);
+        }
+        .promo-arrow-prev {
+            left: 12px;
+        }
+        .promo-arrow-next {
+            right: 12px;
+        }
+    </style>
 @endguest
 @endsection
