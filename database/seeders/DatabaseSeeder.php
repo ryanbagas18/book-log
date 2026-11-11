@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             BookSeeder::class,
+            LibraryCatalogSeeder::class,
         ]);
 
         // Pre-v2 books belong to the owner's personal log.

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\GenreController;
+use App\Http\Controllers\Admin\LibraryBookController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
@@ -40,8 +42,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('books', BookController::class);
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () {
         return view('admin.dashboard');
-    })->name('admin.dashboard');
+    })->name('dashboard');
+
+    Route::resource('genres', GenreController::class)->except('show');
+    Route::resource('library-books', LibraryBookController::class)->except('show');
 });

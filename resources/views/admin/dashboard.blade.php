@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Admin Dashboard')
 
-@section('content')
+@section('admin')
 <div class="mb-4">
     <h1 class="fw-bold">Admin dashboard</h1>
-    <p class="text-muted">Ryan Library administration. Catalog management is being built.</p>
+    <p class="text-muted">Ryan Library administration.</p>
 </div>
 @endsection
