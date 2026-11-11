@@ -100,7 +100,7 @@
         <div class="card-body p-4">
             <div class="row align-items-center g-4">
                 <div class="col-md-7">
-                    <h2 class="fw-bold mb-2">Love books? Track them too.</h2>
+                    <h2 class="fw-bold mb-2">Consumerism disguised as intellectualism — we know.</h2>
                     <p class="text-muted mb-3">
                         Ryan Library is for renting. With a free Book Log account you can also
                         <strong>catalog the books you own</strong>, track your reading status and
