@@ -126,6 +126,10 @@
                                     alt="Book Log analytics dashboard">
                             </div>
                             <div class="carousel-item">
+                                <img src="{{ asset('images/book-log-api-search.webp') }}" class="d-block w-100 promo-zoom"
+                                    alt="Book Log API book search">
+                            </div>
+                            <div class="carousel-item">
                                 <img src="{{ asset('images/book-log-collection.webp') }}" class="d-block w-100 promo-zoom"
                                     alt="Book Log book collection">
                             </div>
