@@ -94,4 +94,34 @@
         </div>
     </div>
 @endif
+
+@guest
+    <div class="card mt-5">
+        <div class="card-body p-4">
+            <div class="row align-items-center g-4">
+                <div class="col-md-8">
+                    <h2 class="fw-bold mb-2">Love books? Track them too.</h2>
+                    <p class="text-muted mb-3">
+                        Ryan Library is for renting. With a free Book Log account you can also
+                        <strong>catalog the books you own</strong>, track your reading status and
+                        ratings, and see personal analytics — all in one place.
+                    </p>
+                    <ul class="text-muted mb-0">
+                        <li>Log books you own, borrow, or want to read</li>
+                        <li>Rate and track your reading progress</li>
+                        <li>Visual dashboard of your reading habits</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg fw-bold w-100 mb-2">
+                        Create Free Account
+                    </a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-secondary w-100">
+                        I already have an account
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endguest
 @endsection

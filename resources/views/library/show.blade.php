@@ -75,7 +75,12 @@
                         @auth
                             <a href="{{ route('library.rent.create', $book) }}" class="btn btn-primary fw-bold">Rent Now</a>
                         @else
-                            <a href="{{ route('login') }}" class="btn btn-primary fw-bold">Log in to Rent</a>
+                            <div>
+                                <a href="{{ route('login') }}" class="btn btn-primary fw-bold">Log in to Rent</a>
+                                <div class="text-muted small mt-2">Renting needs an account.
+                                    <a href="{{ route('register') }}" class="text-decoration-none">Create one free</a>
+                                    — and track the books you own with Book Log.</div>
+                            </div>
                         @endauth
                     @else
                         <button class="btn btn-secondary" disabled>Out of stock</button>
