@@ -125,7 +125,11 @@ The `books` table includes:
 
 ## Notes
 
-- The application is designed for personal, local use (no authentication)
+- The application now requires authentication; personal books are scoped per user
+- Roles: `admin` (Ryan Library owner) and `customer`. `role` is not mass-assignable
+- Password reset / forgot-password is intentionally out of scope (needs SMTP); admins reset passwords via `php artisan tinker`
+- Profile is considered "complete" when name, email, phone and address are all filled; the `profile.complete` middleware guards flows that need it
+- Seeded dev users all use the password `password` (dev only, see seeder warning)
 - All prices are in Indonesian Rupiah (Rp)
 - Currency format: "Rp 12.500" (dot as thousands separator, no decimals)
 - Price of 0 displays as "Free"

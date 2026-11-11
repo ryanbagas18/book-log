@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address',
     ];
 
     /**
@@ -44,5 +46,18 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function hasCompleteProfile(): bool
+    {
+        return ! empty($this->name)
+            && ! empty($this->email)
+            && ! empty($this->phone)
+            && ! empty($this->address);
     }
 }
