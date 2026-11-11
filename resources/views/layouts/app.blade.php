@@ -152,6 +152,11 @@
                 @auth
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('library.index') }}">
+                                Library
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('dashboard.index') }}">
                                 Dashboard
                             </a>
@@ -159,6 +164,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('books.index') }}">
                                 My Books
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('rentals.index') }}">
+                                My Rentals
                             </a>
                         </li>
                         @if (auth()->user()->isAdmin())
@@ -187,6 +197,11 @@
                         <button type="submit" class="btn btn-outline-secondary">Log out</button>
                     </form>
                 @else
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('library.index') }}">Library</a>
+                        </li>
+                    </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Log in</a>

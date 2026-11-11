@@ -36,6 +36,11 @@ class LibraryBook extends Model
         'is_active' => 'boolean',
     ];
 
+    public function rentals()
+    {
+        return $this->hasMany(Rental::class);
+    }
+
     public function genre(): BelongsTo
     {
         return $this->belongsTo(Genre::class);
