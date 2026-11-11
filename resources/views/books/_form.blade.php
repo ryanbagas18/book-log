@@ -357,7 +357,7 @@
                         @enderror
                     </div>
 
-                    <div id="purchase-fields" class="p-3 bg-light rounded">
+                    <div id="purchase-fields" class="p-3 rounded" style="background-color: #252525;">
                         <h6 class="fw-bold mb-3">Purchase Details</h6>
                         <div class="row">
                             <div class="col-md-6">
