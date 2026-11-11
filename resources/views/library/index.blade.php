@@ -99,7 +99,7 @@
     <div class="card mt-5">
         <div class="card-body p-4">
             <div class="row align-items-center g-4">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <h2 class="fw-bold mb-2">Love books? Track them too.</h2>
                     <p class="text-muted mb-3">
                         Ryan Library is for renting. With a free Book Log account you can also
@@ -112,13 +112,25 @@
                         <li>Visual dashboard of your reading habits</li>
                     </ul>
                 </div>
-                <div class="col-md-4 text-md-end">
-                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg fw-bold w-100 mb-2">
-                        Create Free Account
-                    </a>
-                    <a href="{{ route('login') }}" class="btn btn-outline-secondary w-100">
-                        I already have an account
-                    </a>
+                <div class="col-md-5">
+                    <div class="d-flex justify-content-center gap-2 mb-3">
+                        <img src="https://covers.openlibrary.org/b/id/6643692-M.jpg" alt="Bumi Manusia cover"
+                            class="rounded shadow" style="width: 70px; height: 105px; object-fit: cover;">
+                        <img src="https://covers.openlibrary.org/b/id/7079796-M.jpg" alt="Laskar Pelangi cover"
+                            class="rounded shadow mt-2" style="width: 70px; height: 105px; object-fit: cover;">
+                        <img src="https://covers.openlibrary.org/b/id/12539702-M.jpg" alt="Atomic Habits cover"
+                            class="rounded shadow" style="width: 70px; height: 105px; object-fit: cover;">
+                        <img src="https://covers.openlibrary.org/b/id/8634250-M.jpg" alt="Sapiens cover"
+                            class="rounded shadow mt-2" style="width: 70px; height: 105px; object-fit: cover;">
+                    </div>
+                    <div>
+                        <a href="{{ route('register') }}" class="btn btn-primary btn-lg fw-bold w-100 mb-2">
+                            Create Free Account
+                        </a>
+                        <a href="{{ route('login') }}" class="btn btn-outline-secondary w-100">
+                            I already have an account
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
