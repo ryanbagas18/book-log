@@ -274,6 +274,11 @@
                 setZoom(zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY);
             }, { passive: false });
 
+            lightboxImg.addEventListener('click', function(e) {
+                if (e.detail === 2) return;
+                setZoom(zoom > 1 ? 1 : 2, e.clientX, e.clientY);
+            });
+
             lightboxImg.addEventListener('dblclick', function(e) {
                 e.preventDefault();
                 setZoom(zoom > 1 ? 1 : 2.5, e.clientX, e.clientY);
