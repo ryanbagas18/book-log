@@ -31,7 +31,7 @@
     <!-- Stats Cards -->
     <div class="row g-4 mb-5">
         <div class="col-md-4">
-            <div class="card stat-blue text-white h-100 shadow">
+            <div class="card h-100 shadow">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card stat-green text-white h-100 shadow">
+            <div class="card h-100 shadow">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card stat-info text-white h-100 shadow">
+            <div class="card h-100 shadow">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
