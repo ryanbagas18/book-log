@@ -573,6 +573,18 @@
             background-color: #2d2d2d;
             color: #fff;
         }
+
+        [data-bs-theme="light"] .book-results-list .list-group-item {
+            background-color: #fff;
+            border-color: #d8d2c5;
+            color: #2b2623;
+        }
+
+        [data-bs-theme="light"] .book-results-list .list-group-item-action:hover,
+        [data-bs-theme="light"] .book-results-list .list-group-item-action:focus {
+            background-color: #f2efe9;
+            color: #2b2623;
+        }
     </style>
     <script>
         function togglePurchaseFields() {
@@ -607,7 +619,7 @@
 
             spinner.classList.remove('d-none');
             resultsDiv.innerHTML =
-                '<div class="text-center text-white"><div class="spinner-border" role="status"></div></div>';
+                '<div class="text-center text-body"><div class="spinner-border" role="status"></div></div>';
 
             clearTimeout(searchTimeout);
 
