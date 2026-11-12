@@ -334,10 +334,10 @@
                             </a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
-                            <button type="button" id="themeToggle" class="btn btn-link nav-link p-0"
-                                aria-label="Toggle theme">
-                                <i class="bi bi-moon-stars" id="themeIcon"></i>
-                            </button>
+                            <div class="form-check form-switch m-0 d-flex align-items-center">
+                                <input class="form-check-input" type="checkbox" id="themeSwitch" role="switch">
+                                <label class="form-check-label ms-1" for="themeSwitch" id="themeLabel">Dark</label>
+                            </div>
                         </li>
                     </ul>
                     <a href="{{ route('books.create') }}" class="btn btn-primary fw-bold me-2">
@@ -361,10 +361,10 @@
                             <a class="nav-link" href="{{ route('register') }}">Register</a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
-                            <button type="button" id="themeToggle" class="btn btn-link nav-link p-0"
-                                aria-label="Toggle theme">
-                                <i class="bi bi-moon-stars" id="themeIcon"></i>
-                            </button>
+                            <div class="form-check form-switch m-0 d-flex align-items-center">
+                                <input class="form-check-input" type="checkbox" id="themeSwitch" role="switch">
+                                <label class="form-check-label ms-1" for="themeSwitch" id="themeLabel">Dark</label>
+                            </div>
                         </li>
                     </ul>
                 @endauth
@@ -418,21 +418,26 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         (function () {
-            const toggle = document.getElementById('themeToggle');
-            const icon = document.getElementById('themeIcon');
-            if (!toggle || !icon) return;
+            const themeSwitch = document.getElementById('themeSwitch');
+            const themeLabel = document.getElementById('themeLabel');
+            if (!themeSwitch || !themeLabel) return;
 
-            function syncIcon() {
-                const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-                icon.className = isDark ? 'bi bi-sun' : 'bi bi-moon-stars';
+            function currentTheme() {
+                return document.documentElement.getAttribute('data-bs-theme') === 'light' ? 'light' : 'dark';
             }
 
-            syncIcon();
-            toggle.addEventListener('click', function () {
-                const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+            function sync() {
+                const theme = currentTheme();
+                themeSwitch.checked = theme === 'light';
+                themeLabel.textContent = theme === 'light' ? 'Light' : 'Dark';
+            }
+
+            sync();
+            themeSwitch.addEventListener('change', function () {
+                const next = themeSwitch.checked ? 'light' : 'dark';
                 document.documentElement.setAttribute('data-bs-theme', next);
                 localStorage.setItem('booklog-theme', next);
-                syncIcon();
+                themeLabel.textContent = next === 'light' ? 'Light' : 'Dark';
             });
         })();
     </script>
