@@ -249,6 +249,32 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('input[type="password"]').forEach(function(input) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'position-relative';
+            input.parentNode.insertBefore(wrapper, input);
+            wrapper.appendChild(input);
+            input.classList.add('pe-5');
+
+            const toggle = document.createElement('button');
+            toggle.type = 'button';
+            toggle.className = 'btn btn-link position-absolute top-50 translate-middle-y end-0 text-muted';
+            toggle.style.padding = '0 0.6rem';
+            toggle.setAttribute('aria-label', 'Show password');
+            toggle.innerHTML =
+                '<i class="bi bi-eye"></i>';
+
+            toggle.addEventListener('click', function() {
+                const show = input.type === 'password';
+                input.type = show ? 'text' : 'password';
+                toggle.innerHTML = show ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+                toggle.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+            });
+
+            wrapper.appendChild(toggle);
+        });
+    </script>
     @stack('scripts')
 </body>
 
