@@ -156,6 +156,18 @@
             background-color: #252525;
         }
 
+        .card.stat-blue {
+            background-color: #0d6efd !important;
+        }
+
+        .card.stat-green {
+            background-color: #198754 !important;
+        }
+
+        .card.stat-info {
+            background-color: #0dcaf0 !important;
+        }
+
         [data-bs-theme="light"] {
             --bs-primary: #6D4C3D;
             --bs-primary-rgb: 109, 76, 61;
