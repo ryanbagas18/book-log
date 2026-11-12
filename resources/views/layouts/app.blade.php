@@ -2,6 +2,12 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
+    <script>
+        (function () {
+            var theme = localStorage.getItem('booklog-theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -131,6 +137,155 @@
         .badge {
             color: #121212 !important;
         }
+
+        .surface-box {
+            background-color: #252525;
+        }
+
+        .surface-box-alt {
+            background-color: #2d2d2d;
+        }
+
+        .input-addon {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #888;
+        }
+
+        .cover-ph {
+            background-color: #252525;
+        }
+
+        [data-bs-theme="light"] {
+            --bs-primary: #6D4C3D;
+            --bs-primary-rgb: 109, 76, 61;
+        }
+
+        [data-bs-theme="light"] body {
+            background-color: #F9F7F1;
+            color: #2B2623;
+        }
+
+        [data-bs-theme="light"] .navbar {
+            background-color: #F4F1EA !important;
+            border-bottom: 1px solid #E2DDD1;
+        }
+
+        [data-bs-theme="light"] .navbar-brand {
+            color: #2B2623 !important;
+        }
+
+        [data-bs-theme="light"] .nav-link {
+            color: #6E675F !important;
+        }
+
+        [data-bs-theme="light"] .nav-link:hover,
+        [data-bs-theme="light"] .nav-link.active {
+            color: #2B2623 !important;
+        }
+
+        [data-bs-theme="light"] .card {
+            background-color: #FDFBF7 !important;
+            border-color: #E6E1D6;
+        }
+
+        [data-bs-theme="light"] .card-header {
+            background-color: #F7F4EC !important;
+            border-bottom-color: #E6E1D6;
+        }
+
+        [data-bs-theme="light"] .form-control,
+        [data-bs-theme="light"] .form-select {
+            background-color: #FFFFFF;
+            border-color: #D8D2C5;
+            color: #2B2623;
+        }
+
+        [data-bs-theme="light"] .form-control:focus,
+        [data-bs-theme="light"] .form-select:focus {
+            background-color: #FFFFFF;
+            border-color: #6D4C3D;
+            color: #2B2623;
+        }
+
+        [data-bs-theme="light"] .form-control::placeholder {
+            color: #9A938A;
+        }
+
+        [data-bs-theme="light"] .table {
+            --bs-table-bg: #FFFFFF;
+            --bs-table-border-color: #E6E1D6;
+            --bs-table-color: #2B2623;
+            --bs-table-hover-bg: #F2EFE9;
+        }
+
+        [data-bs-theme="light"] .alert {
+            background-color: #FBF8F2;
+            border-color: #E2DDD1;
+            color: #2B2623;
+        }
+
+        [data-bs-theme="light"] .alert-success {
+            background-color: #EDF3EC;
+            border-color: #CFE0D2;
+            color: #3E6B48;
+        }
+
+        [data-bs-theme="light"] .alert-danger {
+            background-color: #F7E9E7;
+            border-color: #E8CFC9;
+            color: #8C3B2E;
+        }
+
+        [data-bs-theme="light"] .alert-warning {
+            background-color: #F5EEDF;
+            border-color: #E4D9B8;
+            color: #7A5C1E;
+        }
+
+        [data-bs-theme="light"] .modal-content {
+            background-color: #FDFBF7;
+            border-color: #E6E1D6;
+        }
+
+        [data-bs-theme="light"] .btn-close {
+            filter: none;
+        }
+
+        [data-bs-theme="light"] footer {
+            background-color: #F4F1EA;
+            border-top-color: #E2DDD1;
+        }
+
+        [data-bs-theme="light"] .text-muted {
+            color: #6E675F !important;
+        }
+
+        [data-bs-theme="light"] .text-primary {
+            color: #6D4C3D !important;
+        }
+
+        [data-bs-theme="light"] .badge {
+            color: #2B2623 !important;
+        }
+
+        [data-bs-theme="light"] .surface-box {
+            background-color: #F7F4EC;
+        }
+
+        [data-bs-theme="light"] .surface-box-alt {
+            background-color: #F2EFE9;
+        }
+
+        [data-bs-theme="light"] .input-addon {
+            background-color: #FFFFFF;
+            border-color: #D8D2C5;
+            color: #9A938A;
+        }
+
+        [data-bs-theme="light"] .cover-ph {
+            background-color: #F2EFE9;
+        }
     </style>
 </head>
 
@@ -178,6 +333,12 @@
                                 Profile
                             </a>
                         </li>
+                        <li class="nav-item d-flex align-items-center">
+                            <button type="button" id="themeToggle" class="btn btn-link nav-link p-0"
+                                aria-label="Toggle theme">
+                                <i class="bi bi-moon-stars" id="themeIcon"></i>
+                            </button>
+                        </li>
                     </ul>
                     <a href="{{ route('books.create') }}" class="btn btn-primary fw-bold me-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -198,6 +359,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}">Register</a>
+                        </li>
+                        <li class="nav-item d-flex align-items-center">
+                            <button type="button" id="themeToggle" class="btn btn-link nav-link p-0"
+                                aria-label="Toggle theme">
+                                <i class="bi bi-moon-stars" id="themeIcon"></i>
+                            </button>
                         </li>
                     </ul>
                 @endauth
@@ -249,6 +416,26 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function () {
+            const toggle = document.getElementById('themeToggle');
+            const icon = document.getElementById('themeIcon');
+            if (!toggle || !icon) return;
+
+            function syncIcon() {
+                const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+                icon.className = isDark ? 'bi bi-sun' : 'bi bi-moon-stars';
+            }
+
+            syncIcon();
+            toggle.addEventListener('click', function () {
+                const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-bs-theme', next);
+                localStorage.setItem('booklog-theme', next);
+                syncIcon();
+            });
+        })();
+    </script>
     <script>
         document.querySelectorAll('input[type="password"]').forEach(function(input) {
             const wrapper = document.createElement('div');

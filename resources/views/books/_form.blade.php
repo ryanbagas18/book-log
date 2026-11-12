@@ -7,7 +7,7 @@
             @endif
 
             <!-- Search Section -->
-            <div class="card mb-4 shadow-sm border-0" style="background-color: #252525;">
+            <div class="card mb-4 shadow-sm border-0 surface-box">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
@@ -357,7 +357,7 @@
                         @enderror
                     </div>
 
-                    <div id="purchase-fields" class="p-3 rounded" style="background-color: #252525;">
+                    <div id="purchase-fields" class="p-3 rounded surface-box">
                         <h6 class="fw-bold mb-3">Purchase Details</h6>
                         <div class="row">
                             <div class="col-md-6">
@@ -645,7 +645,7 @@
                                     '<img src="' + coverUrl +
                                     '" alt="Cover" style="width: 70px; height: 100px; object-fit: cover; border-radius: 8px;" onerror="this.src=\'https://via.placeholder.com/70x100?text=No+Cover\'">' +
                                     '<div class="flex-grow-1">' +
-                                    '<h6 class="mb-1 fw-bold" style="color: #e0e0e0;">' + title +
+                                    '<h6 class="mb-1 fw-bold text-body">' + title +
                                     '</h6>' +
                                     '<p class="mb-1 text-muted small">' + authorStr + '</p>' +
                                     '<small class="text-primary fw-bold">' + source +

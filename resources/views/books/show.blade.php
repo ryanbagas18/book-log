@@ -18,7 +18,7 @@
             @if ($book->cover_image_url)
                 <img src="{{ $book->cover_image_url }}" class="card-img-top" alt="{{ $book->title }}" style="height: 450px; object-fit: cover;">
             @else
-                <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 450px; background-color: #252525;">
+                <div class="card-img-top d-flex align-items-center justify-content-center cover-ph" style="height: 450px;">
                     <div class="text-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-book text-muted" viewBox="0 0 16 16">
                             <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
@@ -91,25 +91,25 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <div class="p-3 rounded" style="background-color: #252525;">
+                        <div class="p-3 rounded surface-box">
                             <small class="text-muted d-block mb-1">Genre</small>
                             <strong>{{ $book->genre ?? '-' }}</strong>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="p-3 rounded" style="background-color: #252525;">
+                        <div class="p-3 rounded surface-box">
                             <small class="text-muted d-block mb-1">Pages</small>
                             <strong>{{ $book->pages ?? '-' }}</strong>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="p-3 rounded" style="background-color: #252525;">
+                        <div class="p-3 rounded surface-box">
                             <small class="text-muted d-block mb-1">ISBN</small>
                             <strong>{{ $book->isbn ?? '-' }}</strong>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="p-3 rounded" style="background-color: #252525;">
+                        <div class="p-3 rounded surface-box">
                             <small class="text-muted d-block mb-1">Language</small>
                             <strong>{{ $book->language }}</strong>
                         </div>
@@ -134,13 +134,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <div class="p-3 rounded" style="background-color: #2d2d2d;">
+                        <div class="p-3 rounded surface-box-alt">
                             <small class="text-muted d-block mb-1">Status</small>
                             <strong>{{ $book->status_label }}</strong>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="p-3 rounded" style="background-color: #2d2d2d;">
+                        <div class="p-3 rounded surface-box-alt">
                             <small class="text-muted d-block mb-1">Rating</small>
                             <strong>
                                 @if ($book->rating)
@@ -165,13 +165,13 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="p-3 rounded" style="background-color: #252525;">
+                        <div class="p-3 rounded surface-box">
                             <small class="text-muted d-block mb-1">Started At</small>
                             <strong>{{ $book->started_at?->format('F j, Y') ?? '-' }}</strong>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="p-3 rounded" style="background-color: #252525;">
+                        <div class="p-3 rounded surface-box">
                             <small class="text-muted d-block mb-1">Finished At</small>
                             <strong>{{ $book->finished_at?->format('F j, Y') ?? '-' }}</strong>
                         </div>
@@ -195,32 +195,32 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <div class="p-3 rounded" style="background-color: #252525;">
+                        <div class="p-3 rounded surface-box">
                             <small class="text-muted d-block mb-1">Ownership</small>
                             <strong>{{ $book->ownership_label }}</strong>
                         </div>
                     </div>
                     @if ($book->ownership == 'owned')
                         <div class="col-md-6 mb-3">
-                            <div class="p-3 rounded" style="background-color: #252525;">
+                            <div class="p-3 rounded surface-box">
                                 <small class="text-muted d-block mb-1">Purchase Place</small>
                                 <strong>{{ $book->purchase_place ?? '-' }}</strong>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <div class="p-3 rounded" style="background-color: #252525;">
+                            <div class="p-3 rounded surface-box">
                                 <small class="text-muted d-block mb-1">Condition</small>
                                 <strong>{{ $book->condition ? ($book->condition == 'new' ? 'New' : 'Preloved') : '-' }}</strong>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <div class="p-3 rounded" style="background-color: #252525;">
+                            <div class="p-3 rounded surface-box">
                                 <small class="text-muted d-block mb-1">Purchase Date</small>
                                 <strong>{{ $book->purchase_date?->format('F j, Y') ?? '-' }}</strong>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <div class="p-3 rounded" style="background-color: #252525;">
+                            <div class="p-3 rounded surface-box">
                                 <small class="text-muted d-block mb-1">Price</small>
                                 <strong class="text-primary">{{ $book->formatted_price }}</strong>
                             </div>
@@ -245,7 +245,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="p-3 rounded" style="background-color: #252525;">
+                    <div class="p-3 rounded surface-box">
                         <p class="mb-0" style="white-space: pre-wrap;">{{ $book->notes }}</p>
                     </div>
                 </div>

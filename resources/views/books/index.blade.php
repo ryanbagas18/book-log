@@ -108,7 +108,7 @@
             <form action="{{ route('books.index') }}" method="GET" class="row g-3">
                 <div class="col-md-3">
                     <div class="input-group">
-                        <span class="input-group-text" style="background-color: #2d2d2d; border-color: #444; color: #888;">
+                        <span class="input-group-text input-addon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-search" viewBox="0 0 16 16">
                                 <path
@@ -203,8 +203,8 @@
                                 @endif
                             </div>
                         @else
-                            <div class="card-img-top d-flex align-items-center justify-content-center"
-                                style="height: 280px; border-radius: 12px 12px 0 0; background-color: #252525;">
+                            <div class="card-img-top d-flex align-items-center justify-content-center cover-ph"
+                                style="height: 280px; border-radius: 12px 12px 0 0;">
                                 <div class="text-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
                                         fill="currentColor" class="bi bi-book text-muted" viewBox="0 0 16 16">

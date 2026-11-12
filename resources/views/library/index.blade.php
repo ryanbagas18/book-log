@@ -50,7 +50,7 @@
                             <img src="{{ $book->cover_image_url }}" class="card-img-top" alt="{{ $book->title }}"
                                 style="height: 280px; object-fit: cover; border-radius: 12px 12px 0 0;">
                         @else
-                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                            <div class="card-img-top cover-ph d-flex align-items-center justify-content-center"
                                 style="height: 280px; border-radius: 12px 12px 0 0;">
                                 <div class="text-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
@@ -120,7 +120,7 @@
                 </div>
                 <div class="col-md-5">
                     <div id="promoCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner rounded shadow" style="border: 1px solid #333;">
+                        <div class="carousel-inner rounded shadow" style="border: 1px solid var(--bs-border-color);">
                             <div class="carousel-item active">
                                 <img src="{{ asset('images/book-log-dashboard.webp') }}" class="d-block w-100 promo-zoom"
                                     alt="Book Log analytics dashboard">

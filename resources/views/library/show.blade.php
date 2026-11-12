@@ -15,7 +15,7 @@
         @if ($book->cover_image_url)
             <img src="{{ $book->cover_image_url }}" alt="{{ $book->title }}" class="img-fluid rounded shadow">
         @else
-            <div class="bg-light rounded d-flex align-items-center justify-content-center"
+            <div class="cover-ph rounded d-flex align-items-center justify-content-center"
                 style="height: 400px;">
                 <div class="text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
