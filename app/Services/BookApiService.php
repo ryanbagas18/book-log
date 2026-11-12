@@ -131,8 +131,15 @@ class BookApiService
                     return [];
                 }
 
-                return collect($data['docs'])->map(function ($doc) {
-                    $isbn = $doc['isbn'][0] ?? null;
+                return collect($data['docs'])->take(10)->map(function ($doc, $i) {
+                    $isbn = $this->pickIsbn($doc['isbn'] ?? []);
+                    $pages = $doc['number_of_pages'] ?? null;
+
+                    if ($i < 5 && (! $isbn || ! $pages)) {
+                        $edition = $this->fetchEditionDetails($doc['key'] ?? null);
+                        $isbn = $isbn ?: ($edition['isbn_13'] ?? $edition['isbn_10'] ?? null);
+                        $pages = $pages ?: ($edition['pages'] ?? null);
+                    }
 
                     return [
                         'title' => $doc['title'] ?? '',
@@ -140,7 +147,7 @@ class BookApiService
                         'publisher' => $doc['publisher'][0] ?? '',
                         'published_date' => $doc['first_publish_year'] ?? '',
                         'language' => $doc['language'][0] ?? '',
-                        'page_count' => $doc['number_of_pages'] ?? null,
+                        'page_count' => $pages,
                         'isbn' => $isbn,
                         'cover_url' => isset($doc['cover_i']) ? "https://covers.openlibrary.org/b/id/{$doc['cover_i']}-M.jpg" : null,
                         'source' => 'Open Library',
@@ -149,6 +156,44 @@ class BookApiService
             }
         } catch (\Exception $e) {
             Log::error('Open Library API error: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    protected function pickIsbn(array $isbns): ?string
+    {
+        foreach ($isbns as $isbn) {
+            if (strlen((string) $isbn) === 13) {
+                return (string) $isbn;
+            }
+        }
+
+        return $isbns[0] ?? null;
+    }
+
+    // Search docs often lack isbn/number_of_pages; editions carry them per printing.
+    protected function fetchEditionDetails(?string $workKey): array
+    {
+        if (! $workKey) {
+            return [];
+        }
+
+        try {
+            $response = Http::timeout(5)->withoutVerifying()
+                ->get('https://openlibrary.org' . $workKey . '/editions.json', ['limit' => 1]);
+
+            if (! $response->successful()) {
+                return [];
+            }
+
+            $entry = $response->json('entries.0') ?? [];
+
+            return [
+                'pages' => $entry['number_of_pages'] ?? null,
+                'isbn_13' => $entry['isbn_13'][0] ?? null,
+                'isbn_10' => $entry['isbn_10'][0] ?? null,
+            ];
+        } catch (\Exception $e) {
             return [];
         }
     }

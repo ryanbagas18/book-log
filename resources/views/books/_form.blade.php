@@ -658,12 +658,13 @@
 
                                     const languageMap = {
                                         'en': 'English',
+                                        'eng': 'English',
                                         'id': 'Indonesian',
                                         'ind': 'Indonesian'
                                     };
-                                    const language = languageMap[this.dataset.language
-                                            .toLowerCase()] || this.dataset.language ||
-                                        'English';
+                                    const rawLang = (this.dataset.language || '').toLowerCase();
+                                    const language = rawLang ?
+                                        (languageMap[rawLang] || 'Other') : '';
                                     document.getElementById('language').value =
                                         language;
 
